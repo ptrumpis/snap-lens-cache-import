@@ -6,7 +6,7 @@ const fileList = document.querySelector('#fileList');
 const reset = document.querySelector('#reset');
 const upload = document.querySelector('#upload');
 
-const formData = new FormData();
+let formData = new FormData();
 
 uppie(dropZone, (event, fd, files) => {
     files.forEach(path => {
