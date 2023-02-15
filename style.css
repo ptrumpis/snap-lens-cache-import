@@ -1,0 +1,15 @@
+#dropDiv {
+    min-width: 300px;
+    width: 60%;
+    border: 1px dashed #CCCCCC;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+    color: #CCCCCC;
+  }
+  
+  #dropDiv.over {
+    border-color: #DE7E7E;
+    color: #DE7E7E;
+    background-color: #FFEDED;
+  }

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Import your local cached Snap Camera application lenses to your own Docker based Snap Camera Server">
+    <meta name="keywords" content="Snap Camera,Snapcamera,Snapchat,Snap,Snap Lens,Snap Lenses,Lens,Lenses,lens.lns,cache import,import">
+    <meta name="author" content="Patrick Trumpis">
+    <meta name="generator" content="Patrick Trumpis">
+    <title>Snap Lens Cache Import</title>
+    <link rel="canonical" href="https://ptrumpis.github.io/snap-lens-cache-import/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body class="text-center text-bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Tenth navbar example">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="https://ptrumpis.github.io/snap-lens-cache-import/">Snap Lens Cache Import</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://github.com/ptrumpis/snap-lens-cache-import"><i class="bi bi-github"></i> Source Code</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://github.com/ptrumpis/snap-camera-server"><i class="bi bi-github"></i> Download Server</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Snap Camera Projects</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="https://github.com/ptrumpis/snap-camera-server"><i class="bi bi-github"></i> Snap Camera Server</a></li>
+                  <li><a class="dropdown-item" href="https://github.com/ptrumpis/snap-camera-installer"><i class="bi bi-github"></i> Snap Camera Server Installer</a></li>
+                  <li><a class="dropdown-item" href="https://github.com/ptrumpis/snap-lens-file-format"><i class="bi bi-github"></i> Snap Lens File Format</a></li>
+                  <li><a class="dropdown-item" href="https://github.com/ptrumpis/snap-lens-file-extractor"><i class="bi bi-github"></i> Snap Lens File Extractor</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="cover-container w-100 h-100 p-3 mx-auto">
+        <main class="px-3">
+            <h3>Re-use your cached Snap Lenses</h2>
+            <p class="lead">This web upload form will import lenses stored in your local application cache to your own Docker based Snap Camera Server.</p>
+
+            <div class="row justify-content-md-center">
+              <div class="col-md-auto">
+                <div class="mb-3">
+                  <label for="serverAddress" class="form-label">Server address</label>
+                  <input type="server" class="form-control" id="serverAddress" placeholder="https://127.0.0.1:443" value="https://127.0.0.1:443">
+                </div>
+              </div>
+            </div>
+
+            <div id="dropDiv">
+              <p class="lead mt-4">Drag and Drop your <b>settings.json</b> and the contents of your <b>cache/lenses/</b> folder to this area.</p>
+              <pre id="fileList"></pre>
+            </div>
+
+            <p class="lead">
+                <a href="#" id="reset" class="btn btn-md btn-secondary fw-bold">Reset Files</a>
+                <a href="#" id="upload" class="btn btn-md btn-light fw-bold">Start Import</a>
+            </p>
+        </main>
+
+        <footer class="mt-auto text-white-50 py-5">
+            <p>
+                This is <a href="https://github.com/ptrumpis/snap-lens-cache-import" class="link-secondary"><i class="bi bi-github"></i> Snap Lens Cache Import</a>
+                © 2023 by <a href="https://github.com/ptrumpis" class="link-secondary">Patrick Trumpis</a>.
+            </p>
+        </footer>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
