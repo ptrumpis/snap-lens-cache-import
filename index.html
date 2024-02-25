@@ -50,13 +50,19 @@
             <h3>Re-use your cached Snap Lenses</h3>
             <p class="lead">This web upload form will import lenses stored in your local application cache to your own Docker based Snap Camera Server.</p>
 
-            <div class="row justify-content-md-center">
-              <div class="col-md-auto">
-                <div class="mb-3">
+            <div class="row justify-content-sm-center">
+              <div class="col-xs-auto col-sm-6 col-md-4 col-lg-3">
+                <div class="mb-4">
                   <label for="serverAddress" class="form-label">Server address</label>
-                  <input type="server" class="form-control" id="serverAddress" placeholder="http://127.0.0.1:80" value="http://127.0.0.1:80">
-                </div>
+                  <input type="server" class="form-control" id="serverAddress" placeholder="http://studio-app.snapchat.com:80" value="http://studio-app.snapchat.com:80">
+                </div> 
               </div>
+            </div>
+
+            <div class="mb-4">
+                <input class="form-check-input" type="checkbox" value="" id="overwriteLenses">
+                <label class="form-check-label" for="overwriteLenses">Allow overwriting existing Lenses</label>
+                <p class="text-warning">(overwriting requires Snap Camera Server v4 and above)</p>
             </div>
 
             <div id="dropDiv">
@@ -68,6 +74,9 @@
                 <a href="#" id="reset" class="btn btn-md btn-secondary fw-bold">Reset Files</a>
                 <a href="#" id="upload" class="btn btn-md btn-light fw-bold">Start Import</a>
             </p>
+
+            <p id="responseSuccess" class="text-success"></p>
+            <p id="responseError" class="text-danger"></p>
         </main>
 
         <footer class="mt-auto text-white-50 py-5">
