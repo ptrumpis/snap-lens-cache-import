@@ -61,6 +61,11 @@ function importFiles(apiPath, formData) {
     xhr.send(formData);
 }
 
+function addNewLensUploadGroup() {
+    const clone = document.importNode(lensUploadGroup.content, true);
+    lensUploadGroups.appendChild(clone);
+}
+
 uppie(cacheImportDropZone, (event, fd, files) => {
     files.forEach(path => {
         cacheImportFileList.innerHTML += path + '\r\n';
@@ -100,8 +105,7 @@ startCacheImport.addEventListener("click", function (e) {
 });
 
 addLensUpload.addEventListener("click", function (e) {
-    const clone = document.importNode(lensUploadGroup.content, true);
-    lensUploadGroups.appendChild(clone);
+    addNewLensUploadGroup();
 });
 
 resetLensUpload.addEventListener("click", function (e) {
@@ -110,6 +114,8 @@ resetLensUpload.addEventListener("click", function (e) {
     lensUploadGroups.innerHTML = "";
     responseSuccess.innerHTML = "";
     responseError.innerHTML = "";
+
+    addNewLensUploadGroup();
 });
 
 startLensUpload.addEventListener("click", function (e) {
@@ -131,6 +137,5 @@ startLensUpload.addEventListener("click", function (e) {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const clone = document.importNode(lensUploadGroup.content, true);
-    lensUploadGroups.appendChild(clone);
+    addNewLensUploadGroup();
 });
