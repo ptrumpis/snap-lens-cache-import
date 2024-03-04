@@ -1,4 +1,4 @@
-#dropDiv {
+#cacheImportDropZone {
     min-width: 300px;
     width: 60%;
     border: 1px dashed #CCCCCC;
@@ -8,7 +8,7 @@
     color: #CCCCCC;
   }
   
-  #dropDiv.over {
+  #cacheImportDropZone.over {
     border-color: #DE7E7E;
     color: #DE7E7E;
     background-color: #FFEDED;
