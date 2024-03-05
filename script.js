@@ -61,17 +61,41 @@ function importFiles(apiPath, formData) {
     xhr.send(formData);
 }
 
+function parseLensId(path) {
+    const regex = /(?:^|\/)(\d{11,16})(?:_|\.|$)/;
+    const match = path.match(regex);
+    if (match) {
+        const numericValue = parseInt(match[1], 10);
+        if (!isNaN(numericValue)) {
+            return numericValue;
+        }
+    }
+    return null;
+}
+
 function addNewLensUploadGroup() {
     const clone = document.importNode(lensUploadGroup.content, true);
     lensUploadGroups.appendChild(clone);
+
+    const fileInput = lensUploadGroups.lastElementChild.querySelector('input[type=file]');
+    const lensIdInput = fileInput.closest('.upload-group').querySelector('input[name="id[]"]');
+
+    uppie(fileInput, (event, formData, files) => {
+        files.forEach(path => {
+            const id = parseLensId(path);
+            if (!lensIdInput.value && id) {
+                lensIdInput.value = id;
+            }
+        });
+    });
 }
 
-uppie(cacheImportDropZone, (event, fd, files) => {
+uppie(cacheImportDropZone, (event, formData, files) => {
     files.forEach(path => {
         cacheImportFileList.innerHTML += path + '\r\n';
     });
 
-    for (const value of fd.values()) {
+    for (const value of formData.values()) {
         cacheImportForm.append('file[]', value, value.name);
     }
 });
