@@ -8,7 +8,7 @@
     color: #CCCCCC;
   }
   
-  #cacheImportDropZone.over {
+  #cacheImportDropZone:hover {
     border-color: #DE7E7E;
     color: #DE7E7E;
     background-color: #FFEDED;
