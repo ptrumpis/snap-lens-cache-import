@@ -43,8 +43,8 @@
 
     <div class="cover-container w-100 h-100 p-3 mx-auto">
         <main class="px-3">
-            <h3>Re-use your cached Snap Lenses</h3>
-            <p class="lead">This web upload form will import lenses stored in your local application cache to your own Docker based Snap Camera Server.</p>
+            <h3>Upload and Import Snap Lenses</h3>
+            <p class="lead">This web upload form will upload modified Lenses and import Lenses stored in your local application cache to your own Snap Camera Server.</p>
 
             <div class="row justify-content-sm-center">
                 <div class="col-xs-auto col-sm-6 col-md-4 col-lg-3">
@@ -60,8 +60,8 @@
                     <div class="mb-4">
                         <label for="uploadMode" class="form-label">Upload Mode</label>
                         <select id="uploadMode" class="form-select">
-                            <option value="cacheImport" selected>Cache Import</option>
-                            <option value="lensUpload">Individual Lens Upload</option>
+                            <option value="cacheImport" selected>Cache Import Mode</option>
+                            <option value="lensUpload">Individual Lens Upload Mode</option>
                         </select>
                     </div>
                 </div>
@@ -89,15 +89,17 @@
             </div>
 
             <div id="lensUpload" class="mb-4 collapse">
-                <div id="lensUploadGroups"></div>
+                <form action="#">
+                    <div id="lensUploadGroups"></div>
 
-                <p class="lead">
-                    <a href="#" id="addLensUpload" class="btn btn-sm btn-primary fw-bold">Add Another Lens</a>
-                </p>
-                <p class="lead">
-                    <a href="#" id="resetLensUpload" class="btn btn-md btn-secondary fw-bold">Reset Form</a>
-                    <a href="#" id="startLensUpload" class="btn btn-md btn-light fw-bold">Start Upload</a>
-                </p>
+                    <p class="lead">
+                        <a href="#" id="addLensUpload" class="btn btn-sm btn-primary fw-bold">Add Another Lens</a>
+                    </p>
+                    <p class="lead">
+                        <button type="reset" id="resetLensUpload" class="btn btn-md btn-secondary fw-bold">Reset Form</button>
+                        <button type="submit" id="startLensUpload" class="btn btn-md btn-light fw-bold">Start Upload</button>
+                    </p>
+                </form>
             </div>
 
             <p id="responseSuccess" class="text-success"></p>
@@ -111,7 +113,7 @@
                         <input type="file" class="form-control" name="lens[]" accept=".lns" required>
                     </div>
                     <div class="form-group mb-1">
-                        <input type="text" class="form-control" name="id[]" placeholder="Lens ID" required>
+                        <input type="text" class="form-control" name="id[]" placeholder="Lens ID or Lens Share URL" required>
                     </div>
                     <div class="form-group mb-1">
                         <button class="btn btn-sm btn-danger" type="button" onclick="this.closest('.upload-group').remove()">Remove</button>

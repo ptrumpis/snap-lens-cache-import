@@ -73,6 +73,15 @@ function parseLensId(path) {
     return null;
 }
 
+function isValidUrl(string) {
+    try {
+        new URL(string);
+        return true;
+    } catch (_) {
+        return false;
+    }
+}
+
 function addNewLensUploadGroup() {
     const clone = document.importNode(lensUploadGroup.content, true);
     lensUploadGroups.appendChild(clone);
@@ -125,6 +134,11 @@ resetCacheImport.addEventListener("click", function (e) {
 });
 
 startCacheImport.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    responseSuccess.innerHTML = "";
+    responseError.innerHTML = "";
+
     importFiles(importCacheApiPath, cacheImportForm);
 });
 
@@ -143,6 +157,16 @@ resetLensUpload.addEventListener("click", function (e) {
 });
 
 startLensUpload.addEventListener("click", function (e) {
+    responseSuccess.innerHTML = "";
+    responseError.innerHTML = "";
+    let isErrorOccurred = false;
+
+    if (this.closest('form').checkValidity()) {
+        e.preventDefault();
+    } else {
+        return false;
+    }
+
     const uploadGroups = document.querySelectorAll('.upload-group');
     uploadGroups.forEach(group => {
         const fileInput = group.querySelector('input[type="file"]');
@@ -150,14 +174,27 @@ startLensUpload.addEventListener("click", function (e) {
 
         if (fileInput.files.length > 0) {
             lensUploadForm.append('file[]', fileInput.files[0]);
+        } else {
+            responseError.innerHTML += `Error: You have to select a .lns file.<br/>`;
+            isErrorOccurred = true;
         }
 
-        if (idInput.value.trim() !== "") {
-            lensUploadForm.append('id[]', idInput.value.trim());
+        const inputVal = idInput.value.trim();
+        const lensId = parseLensId(inputVal);
+        if (lensId) {
+            lensUploadForm.append('id[]', lensId);
+        } else if (isValidUrl(inputVal)) {
+            lensUploadForm.append('url[]', inputVal);
+        } else {
+            responseError.innerHTML += `Error: "${inputVal}" is neither a valid Lens ID nor a share URL.<br/>`;
+            isErrorOccurred = true;
         }
     });
 
-    importFiles(importLensApiPath, lensUploadForm);
+    if (!isErrorOccurred) {
+        importFiles(importLensApiPath, lensUploadForm);
+    }
+
 });
 
 document.addEventListener("DOMContentLoaded", function () {
