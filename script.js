@@ -17,8 +17,7 @@ const addLensUpload = document.querySelector('#addLensUpload');
 const resetLensUpload = document.querySelector('#resetLensUpload');
 const startLensUpload = document.querySelector('#startLensUpload');
 
-const responseSuccess = document.querySelector('#responseSuccess');
-const responseError = document.querySelector('#responseError');
+const response = document.querySelector('#response');
 
 const importCacheApiPath = "/vc/v1/import/cache";
 const importLensApiPath = "/vc/v1/import/lens";
@@ -37,28 +36,43 @@ function importFiles(apiPath, formData) {
             try {
                 const data = JSON.parse(xhr.responseText);
                 if (data.error) {
-                    responseError.innerHTML = `Import Error: ${data.error}`;
+                    error(`Import Error: ${data.error}`);
                 } else {
-                    responseSuccess.innerHTML = "Success!";
+                    success("Success!");
                     if (data.import && data.import.length) {
-                        responseSuccess.innerHTML += `<br/>Imported IDs: ${data.import.join(', ')}`;
+                        success(`Imported IDs: ${data.import.join(', ')}`);
                     }
                     if (data.update && data.update.length) {
-                        responseSuccess.innerHTML += `<br/>Updated IDs: ${data.update.join(', ')}`;
+                        success(`Updated IDs: ${data.update.join(', ')}`);
                     }
                 }
             } catch (e) {
                 console.error(e);
-                responseError.innerHTML = `JS Error: ${e.message}`;
+                error(`JS Error: ${e.message}`);
             }
         } else {
-            responseError.innerHTML = `Request Error: ${xhr.statusText}`;
+            error(`Request Error: ${xhr.statusText}`);
         }
     };
     xhr.onerror = function () {
-        responseError.innerHTML = "Network Error";
+        error("Network Error");
     };
     xhr.send(formData);
+}
+
+function error(message) {
+    out(message, 'warning');
+}
+
+function success(message) {
+    out(message, 'success');
+}
+
+function out(message, type) {
+    const p = document.createElement('p');
+    p.classList.add(`text-${type}`);
+    p.textContent = message;
+    response.appendChild(p);
 }
 
 function parseLensId(path) {
@@ -129,15 +143,13 @@ resetCacheImport.addEventListener("click", function (e) {
     cacheImportForm = new FormData();
 
     cacheImportFileList.innerHTML = "";
-    responseSuccess.innerHTML = "";
-    responseError.innerHTML = "";
+    response.innerHTML = "";
 });
 
 startCacheImport.addEventListener("click", function (e) {
     e.preventDefault();
 
-    responseSuccess.innerHTML = "";
-    responseError.innerHTML = "";
+    response.innerHTML = "";
 
     importFiles(importCacheApiPath, cacheImportForm);
 });
@@ -150,15 +162,15 @@ resetLensUpload.addEventListener("click", function (e) {
     lensUploadForm = new FormData();
 
     lensUploadGroups.innerHTML = "";
-    responseSuccess.innerHTML = "";
-    responseError.innerHTML = "";
+    response.innerHTML = "";
 
     addNewLensUploadGroup();
 });
 
 startLensUpload.addEventListener("click", function (e) {
-    responseSuccess.innerHTML = "";
-    responseError.innerHTML = "";
+    lensUploadForm = new FormData();
+
+    response.innerHTML = "";
     let isErrorOccurred = false;
 
     if (this.closest('form').checkValidity()) {
@@ -175,7 +187,7 @@ startLensUpload.addEventListener("click", function (e) {
         if (fileInput.files.length > 0) {
             lensUploadForm.append('file[]', fileInput.files[0]);
         } else {
-            responseError.innerHTML += `Error: You have to select a .lns file.<br/>`;
+            error(`Error: You have to select a .lns file.`);
             isErrorOccurred = true;
         }
 
@@ -186,7 +198,7 @@ startLensUpload.addEventListener("click", function (e) {
         } else if (isValidUrl(inputVal)) {
             lensUploadForm.append('url[]', inputVal);
         } else {
-            responseError.innerHTML += `Error: "${inputVal}" is neither a valid Lens ID nor a share URL.<br/>`;
+           error(`Error: "${inputVal}" is neither a valid Lens ID nor a share URL.`);
             isErrorOccurred = true;
         }
     });
