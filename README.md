@@ -6,7 +6,16 @@
 [![GitHub forks](https://img.shields.io/github/forks/ptrumpis/snap-lens-cache-import?style=flat)](https://github.com/ptrumpis/snap-lens-cache-import/forks)
 
 # 👻 Snap Lens Cache Import
-Import your local cached Lenses from your Snap Camera application to your own Snap Camera Server with ease.
+Import your local cached Lenses from your Snap Camera application or upload custom Lenses to your own Snap Camera Server with ease.
+
+## ⚠️ Requirements
+- [Snap Camera Server](https://github.com/ptrumpis/snap-camera-server)
+  - Cache Import requires v2.0+
+  - Custom Upload requires v4.0+
+
+## 🚀 Usage
+Visit the Web Import Tool and follow the instructions
+- [Web Import Tool](https://ptrumpis.github.io/snap-lens-cache-import/)
 
 ### 🖥️ Snap Camera on Windows
 Under Windows your local cached Snap Lenses are located at
@@ -18,15 +27,6 @@ And your *settings.json* is located at
 ```
 %USERPROFILE%\AppData\Local\Snap\Snap Camera\settings.json
 ```
-
-## ⚠️ Requirements
-- [Snap Camera Server](https://github.com/ptrumpis/snap-camera-server)
-
-This cache import utility requires Snap Camera Server (version 2.0 or latest).
-
-## 🚀 Usage
-Visit the Web Import Tool and follow the instructions
-- [Web Import Tool](https://ptrumpis.github.io/snap-lens-cache-import/)
 
 ## 📺 How To Video Guide
 You can watch this step by step video guide on YouTube if you need help with the import process
