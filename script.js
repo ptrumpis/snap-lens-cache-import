@@ -37,14 +37,17 @@ function importFiles(apiPath, formData) {
                 const data = JSON.parse(xhr.responseText);
                 if (data.error) {
                     error(`Import Error: ${data.error}`);
-                } else {
-                    success("Success!");
+                } else if (data.length) {
                     if (data.import && data.import.length) {
+                        success("Success!");
                         success(`Imported IDs: ${data.import.join(', ')}`);
                     }
                     if (data.update && data.update.length) {
+                        success("Success!");
                         success(`Updated IDs: ${data.update.join(', ')}`);
                     }
+                } else {
+                    error(`API Error: no response`);
                 }
             } catch (e) {
                 console.error(e);
