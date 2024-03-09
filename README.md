@@ -14,8 +14,16 @@ Import your local cached Lenses from your Snap Camera application or upload cust
   - Custom Upload requires v4.0+
 
 ## 🚀 Usage
-Visit the Web Import Tool and follow the instructions
+Visit the Web Import Tool and follow the instructions.
 - [Web Import Tool](https://ptrumpis.github.io/snap-lens-cache-import/)
+
+Thats it!
+
+#### Offline Usage (optional)
+If you have Node.js and npm installed you can download the latest release package and run a local copy with
+```
+npx http-server
+```
 
 ### 🖥️ Snap Camera on Windows
 Under Windows your local cached Snap Lenses are located at
