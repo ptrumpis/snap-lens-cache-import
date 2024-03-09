@@ -26,7 +26,7 @@ let cacheImportForm = new FormData();
 let lensUploadForm = new FormData();
 
 function importFiles(apiPath, formData) {
-    formData.append('allow_overwrite', overwriteLenses.checked ? 'true' : 'false');
+    formData.set('allow_overwrite', overwriteLenses.checked ? 'true' : 'false');
 
     const xhr = new XMLHttpRequest();
 
