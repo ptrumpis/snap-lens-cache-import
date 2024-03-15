@@ -199,7 +199,7 @@ startLensUpload.addEventListener("click", function (e) {
         if (lensId) {
             lensUploadForm.append('id[]', lensId);
         } else if (isValidUrl(inputVal)) {
-            lensUploadForm.append('url[]', inputVal);
+            lensUploadForm.append('id[]', inputVal);
         } else {
            error(`Error: "${inputVal}" is neither a valid Lens ID nor a share URL.`);
             isErrorOccurred = true;
@@ -209,7 +209,6 @@ startLensUpload.addEventListener("click", function (e) {
     if (!isErrorOccurred) {
         importFiles(importLensApiPath, lensUploadForm);
     }
-
 });
 
 document.addEventListener("DOMContentLoaded", function () {
