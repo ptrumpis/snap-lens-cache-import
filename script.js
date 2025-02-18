@@ -128,7 +128,7 @@ uppie(cacheImportDropZone, (event, formData, files) => {
     }
 });
 
-uploadMode.addEventListener('change', function () {
+uploadMode.addEventListener('change', function (e) {
     e.preventDefault();
 
     var selectedOption = this.value;
