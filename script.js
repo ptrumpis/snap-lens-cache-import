@@ -31,18 +31,20 @@ function importFiles(apiPath, formData) {
     const xhr = new XMLHttpRequest();
 
     xhr.open('POST', serverAddress.value + apiPath);
+    xhr.responseType = 'json';
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             try {
-                const data = JSON.parse(xhr.responseText);
-                if (data.error) {
+                const data = xhr.response;
+                console.log(data);
+                if (data && data.error) {
                     error(`Import Error: ${data.error}`);
-                } else if (data.length) {
-                    if (data.import && data.import.length) {
+                } else if (data && (data.import?.length || data.update?.length)) {
+                    if (data.import?.length) {
                         success("Success!");
                         success(`Imported IDs: ${data.import.join(', ')}`);
                     }
-                    if (data.update && data.update.length) {
+                    if (data.update?.length) {
                         success("Success!");
                         success(`Updated IDs: ${data.update.join(', ')}`);
                     }
@@ -54,7 +56,7 @@ function importFiles(apiPath, formData) {
                 error(`JS Error: ${e.message}`);
             }
         } else {
-            error(`Request Error: ${xhr.statusText}`);
+            error(`Request Error: ${xhr.status} - ${xhr.statusText || '(No status text available)'}`);
         }
     };
     xhr.onerror = function () {
@@ -127,6 +129,8 @@ uppie(cacheImportDropZone, (event, formData, files) => {
 });
 
 uploadMode.addEventListener('change', function () {
+    e.preventDefault();
+
     var selectedOption = this.value;
 
     if (selectedOption === 'cacheImport') {
@@ -143,6 +147,8 @@ uploadMode.addEventListener('change', function () {
 });
 
 resetCacheImport.addEventListener("click", function (e) {
+    e.preventDefault();
+
     cacheImportForm = new FormData();
 
     cacheImportFileList.innerHTML = "";
@@ -158,10 +164,14 @@ startCacheImport.addEventListener("click", function (e) {
 });
 
 addLensUpload.addEventListener("click", function (e) {
+    e.preventDefault();
+
     addNewLensUploadGroup();
 });
 
 resetLensUpload.addEventListener("click", function (e) {
+    e.preventDefault();
+
     lensUploadForm = new FormData();
 
     lensUploadGroups.innerHTML = "";
@@ -171,14 +181,15 @@ resetLensUpload.addEventListener("click", function (e) {
 });
 
 startLensUpload.addEventListener("click", function (e) {
+    e.preventDefault();
+    
     lensUploadForm = new FormData();
 
     response.innerHTML = "";
     let isErrorOccurred = false;
 
-    if (this.closest('form').checkValidity()) {
-        e.preventDefault();
-    } else {
+    const form = this.closest('form');
+    if (form && !form.checkValidity()) {
         return false;
     }
 
