@@ -33,20 +33,38 @@ function importFiles(apiPath, formData) {
     xhr.open('POST', serverAddress.value + apiPath);
     xhr.responseType = 'json';
     xhr.onload = function () {
-        if (xhr.status >= 200 && xhr.status < 300) {
+        if (xhr.status >= 200 && xhr.status <= 500) {
             try {
                 const data = xhr.response;
-                console.log(data);
-                if (data && data.error) {
-                    error(`Import Error: ${data.error}`);
-                } else if (data && (data.import?.length || data.update?.length)) {
-                    if (data.import?.length) {
-                        success("Success!");
-                        success(`Imported IDs: ${data.import.join(', ')}`);
-                    }
-                    if (data.update?.length) {
-                        success("Success!");
-                        success(`Updated IDs: ${data.update.join(', ')}`);
+                if (data) {
+                    if (data.error !== false) {
+                        error(`Import Error: ${data.error}`);
+                    } else if (data.import?.length || data.update?.length) {
+                        success("Import Success!");
+                        if (data.import?.length) {
+                            success(`Imported new IDs: [ ${data.import.join(', ')} ]`);
+                        }
+                        if (data.update?.length) {
+                            success(`Updated existing IDs: [ ${data.update.join(', ')} ]`);
+                        }
+                        if (data.discard?.length) {
+                            info(`Discarded existing IDs: [ ${data.discard.join(', ')} ]`);
+                        }
+                        if (data.fail?.length) {
+                            error(`Failed IDs: [ ${data.fail.join(', ')} ]`);
+                        }
+                    } else if (data.discard?.length) {
+                        info(`No new lenses were imported because they already exist.`);
+                        info(`Discarded existing IDs: [ ${data.discard.join(', ')} ]`);
+
+                        if (data.fail?.length) {
+                            error(`Failed IDs: [ ${data.fail.join(', ')} ]`);
+                        }
+                    } else if (data.fail?.length) {
+                        error(`Importing failed without error.`);
+                        error(`Failed IDs: [ ${data.fail.join(', ')} ]`);
+                    } else {
+                        info(`The request was executed successfully, but no changes were made.`);
                     }
                 } else {
                     error(`API Error: no response`);
@@ -60,13 +78,17 @@ function importFiles(apiPath, formData) {
         }
     };
     xhr.onerror = function () {
-        error("Network Error");
+        error("Network Error: Make sure your server is reachable.");
     };
     xhr.send(formData);
 }
 
 function error(message) {
     out(message, 'warning');
+}
+
+function info(message) {
+    out(message, 'info');
 }
 
 function success(message) {
@@ -90,6 +112,14 @@ function parseLensId(path) {
         }
     }
     return null;
+}
+
+function isUuid(string) {
+    const uuid = string.match(/[a-f0-9]{32}/gi)
+    if (uuid && uuid[0]) {
+        return true;
+    }
+    return false;
 }
 
 function isValidUrl(string) {
@@ -160,7 +190,13 @@ startCacheImport.addEventListener("click", function (e) {
 
     response.innerHTML = "";
 
+    if (!cacheImportForm.has('file[]')) {
+        error(`Error: There is no file to upload.`);
+        return false;
+    }
+
     importFiles(importCacheApiPath, cacheImportForm);
+    return true;
 });
 
 addLensUpload.addEventListener("click", function (e) {
@@ -182,7 +218,7 @@ resetLensUpload.addEventListener("click", function (e) {
 
 startLensUpload.addEventListener("click", function (e) {
     e.preventDefault();
-    
+
     lensUploadForm = new FormData();
 
     response.innerHTML = "";
@@ -190,6 +226,8 @@ startLensUpload.addEventListener("click", function (e) {
 
     const form = this.closest('form');
     if (form && !form.checkValidity()) {
+        error(`Error: You must fill in the input fields correctly.`);
+        form.reportValidity();
         return false;
     }
 
@@ -201,7 +239,7 @@ startLensUpload.addEventListener("click", function (e) {
         if (fileInput.files.length > 0) {
             lensUploadForm.append('file[]', fileInput.files[0]);
         } else {
-            error(`Error: You have to select a .lns file.`);
+            error(`Error: You have to select a .lns or .zip file.`);
             isErrorOccurred = true;
         }
 
@@ -209,17 +247,25 @@ startLensUpload.addEventListener("click", function (e) {
         const lensId = parseLensId(inputVal);
         if (lensId) {
             lensUploadForm.append('id[]', lensId);
-        } else if (isValidUrl(inputVal)) {
+        } else if (isValidUrl(inputVal) || isUuid(inputVal)) {
             lensUploadForm.append('id[]', inputVal);
         } else {
-           error(`Error: "${inputVal}" is neither a valid Lens ID nor a share URL.`);
+            error(`Error: "${inputVal}" is neither a valid Lens ID nor a share URL or UUID.`);
             isErrorOccurred = true;
         }
     });
 
-    if (!isErrorOccurred) {
-        importFiles(importLensApiPath, lensUploadForm);
+    if (isErrorOccurred) {
+        return false;
     }
+
+    if (!lensUploadForm.has('id[]') || !lensUploadForm.has('file[]')) {
+        error(`Error: There is no file to upload.`);
+        return false;
+    }
+
+    importFiles(importLensApiPath, lensUploadForm);
+    return true;
 });
 
 document.addEventListener("DOMContentLoaded", function () {

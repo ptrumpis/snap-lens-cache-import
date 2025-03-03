@@ -11,15 +11,14 @@ Import your local cached Lenses from your Snap Camera application or upload cust
 ## ⚠️ Requirements
 - [Snap Camera Server](https://github.com/ptrumpis/snap-camera-server)
   - Cache Import requires v2.0+
-  - Custom Upload requires v3.3+
+  - Custom Upload requires v3.3.3+
 
 ## 🚀 Usage
-Visit the Web Import Tool and follow the instructions.
-- [Web Import Tool](https://ptrumpis.github.io/snap-lens-cache-import/)
+Visit the [Web Import Tool](https://ptrumpis.github.io/snap-lens-cache-import/) and follow the instructions.  
 
 Thats it!
 
-#### Offline Usage (optional)
+### Offline Usage (optional)
 If you have Node.js and npm installed you can download the latest release package and run a local copy with
 ```
 npx http-server
@@ -37,7 +36,7 @@ And your *settings.json* is located at
 ```
 
 ## 📺 How To Video Guide
-You can watch this step by step video guide on YouTube if you need help with the import process
+You can watch this step by step video guide on YouTube if you need help with the import process.
 
 [![Snap Camera Installation Guide](https://img.youtube.com/vi/alo49et3QxY/0.jpg)](https://www.youtube.com/watch?v=alo49et3QxY)
 
