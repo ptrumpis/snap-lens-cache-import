@@ -9,9 +9,7 @@
 Import your local cached Lenses from your Snap Camera application or upload custom Lenses to your own Snap Camera Server with ease.
 
 ## ⚠️ Requirements
-- [Snap Camera Server](https://github.com/ptrumpis/snap-camera-server)
-  - Cache Import requires v2.0+
-  - Custom Upload requires v3.3.3+
+- [Snap Camera Server](https://github.com/ptrumpis/snap-camera-server) >= v3.3.4
 
 ## 🚀 Usage
 Visit the [Web Import Tool](https://ptrumpis.github.io/snap-lens-cache-import/) and follow the instructions.  
